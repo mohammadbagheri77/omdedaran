@@ -1,0 +1,81 @@
+﻿@model List<omdedaran.Models.tbl_BLOG_TeamMembers>
+@using omdedaran.Models;
+@{
+    ViewBag.Title = "درباره ما - عمده داران";
+    Layout = "~/Views/Master/Master.cshtml";
+}
+
+<!-- CONTENT AREA -->
+<div class="content-area">
+
+    <!-- BREADCRUMBS -->
+    <section class="page-section breadcrumbs">
+        <div class="container">
+            <div class="page-header">
+                <h1>درباره ما</h1>
+            </div>
+            <ul class="breadcrumb"></ul>
+        </div>
+    </section>
+    <!-- /BREADCRUMBS -->
+    <!-- PAGE -->
+    <section class="page-section color">
+        <div class="container">
+
+            <p class="text-center lead">وبسایت عمده داران اولین عرضه کننده ی تخصصی کفش عمده به صورت آنلاین در ایران بوده و با ارائه ی محصولات کارخانه ها و تولیدی های کفش توانسته است در فضای اینترنت بستری مناسب برای خرید و فروش عمده ی کفش را فراهم نماید.</p>
+            <p class="text-center lead">این مجموعه از سال 1395 با عکاسی صنعتی در حوزه کفش آغاز به کار نموده و با ارائه مشاوره های تخصصی به تولیدکنندگان این صنعت، فعالیت خود را جهت ورود به فضای فروش اینترنتی ادامه داد؛ سپس با هدف راه اندازه سامانه آنلاین فروش عمده کفش مشغول به همکاری با کارخانه ها و تولیدکنندگان این صنعت شد.</p>
+            <p class="text-center lead">در حال حاضر عمده داران با تنوع بیش از 500 محصول در دسته بندی های کفش، کتانی، صندل، سرپایی، چکمه، پوتین و کفش ایمنی آماده ارائه محصولات به فروشندگان کفش، مغازه داران، بازاریان و فروشگاههای زنجیره ای میباشد.</p>
+            <ul class="text-right lead" style="list-style-type: square">
+                <li>
+                    مزایای خرید از عمده داران:
+                    <ul style="list-style-type: disc">
+                        <li>امکان سفارش آنلاین و تلفنی</li>
+                        <li>انتخاب از میان محصولات چندین کارخانه با تنوع محصولی بالا</li>
+                        <li>ثبت سفارشات بدون واسطه فیزیکی از کارخانه ها</li>
+                        <li>خرید تمامی محصولات به قیمت خالص کارخانه</li>
+                        <li>پرداخت از طریق درگاههای معتبر بانکی</li>
+                        <li>سفارش 24 ساعته بدون محدودیت جغرافیایی</li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="text-right lead" style="list-style-type: square">
+                <li>
+                    مزایای فروش در بستر عمده داران:
+                    <ul style="list-style-type: disc">
+                        <li>حذف هزینه راه اندازی وبسایت</li>
+                        <li>تسویه حساب بصورت نقدی</li>
+                        <li>ارائه محصولات در سایت بدون هزینه اشتراک</li>
+                        <li>قرارگرفتن محصولات در بزرگترین ویترین مجازی صنعت کفش ایران</li>
+                        <li>عکاسی صنعتی با نازلترین قیمت</li>
+                    </ul>
+                </li>
+            </ul>
+            <!--BLOG_TeamMembers-->
+            <hr class="page-divider" />
+
+
+            <div class="row">
+                @foreach (var element in Model)
+                {
+                    <div class="col-md-3">
+                        <div class="thumbnail thumbnail-team no-border no-padding">
+                            <div class="media">
+                                <img class="img-circle" src=" @Html.DisplayFor(m => element.ImagePath)" alt=" @Html.DisplayFor(m => element.Name)" />
+                            </div>
+                            <div class="caption">
+                                <h4 class="caption-title"> @Html.DisplayFor(m => element.Name) <small> @Html.DisplayFor(m => element.Job)</small></h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                }
+               
+            </div>
+
+        </div>
+    </section>
+    <!-- /PAGE -->
+
+
+</div>
+<!-- /CONTENT AREA -->

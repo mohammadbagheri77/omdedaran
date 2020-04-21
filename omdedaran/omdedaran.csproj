@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DataBaseConnector">
+      <HintPath>C:\Users\mohammad\Desktop\New folder (4)\CSharp-SQLServer-Database-Helper-master\DataBaseConnector\bin\Release\DataBaseConnector.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -124,6 +127,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_BLOG_TeamMembers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -383,7 +387,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\plugins\bootstrap\fonts\glyphicons-halflings-regular.eot" />
@@ -397,6 +400,7 @@
     <None Include="packages.config" />
     <Content Include="Views\Master\Master.cshtml" />
     <Content Include="Views\MS\Index.cshtml" />
+    <Content Include="Views\MS\about.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

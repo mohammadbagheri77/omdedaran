@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Master";
+   
 }
 
 <!DOCTYPE html>
@@ -13,17 +13,17 @@
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>عمده داران | کفش عمده | تامین کفش از بزرگترین کارخانه های کفش ایران</title>
-
+    <title> @ViewBag.Title</title>
+    
     <!-- Favicon -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="shortcut icon" href="~/assets/ico/favicon.ico">
 
     <!-- CSS Global -->
     @Styles.Render("~/Content/css")
 
     <!-- Head Libs -->
-    <script src="assets/plugins/modernizr.custom.js"></script>
+    <script src="~/assets/plugins/modernizr.custom.js"></script>
 
     <!--[if lt IE 9]>
         <script src="assets/plugins/iesupport/html5shiv.js"></script>
@@ -56,7 +56,7 @@
                     <div class="cart-items">
                         <div class="cart-items-inner">
                             <div class="media">
-                                <a class="pull-right" href="#"><img class="media-object item-image" src="assets/img/preview/shop/order-1s.jpg" alt=""></a>
+                                <a class="pull-right" href="#"><img class="media-object item-image" src="~/assets/img/preview/shop/order-1s.jpg" alt=""></a>
                                 <p class="pull-left item-price">450000 تومان</p>
 
                                 <div class="media-body">
@@ -92,7 +92,7 @@
 
                     <!-- Logo -->
                     <div class="logo">
-                        <a href="index.html"><img src="assets/img/logo-bella-shop.png" alt="عمده داران" /></a>
+                        <a href="index.html"><img src="~/assets/img/logo-bella-shop.png" alt="عمده داران" /></a>
                     </div>
                     <!-- /Logo -->
                     <!-- Header search -->

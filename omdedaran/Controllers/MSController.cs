@@ -1,9 +1,11 @@
 ﻿using omdedaran.Models;
+using omdedaran.OtherModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace omdedaran.Controllers
 {
@@ -13,8 +15,10 @@ namespace omdedaran.Controllers
 
         
         ////////////////////////{ start : Index }////////////////////////1
+        ///طراحی نشده
         public ActionResult Index()
         {
+             
             return View();
         }
         /// /////////////////////{ end : Index }////////////////////////
@@ -24,7 +28,7 @@ namespace omdedaran.Controllers
       
         public ActionResult about()
         {
-            tbl_BLOG_TeamMembers tbt = new tbl_BLOG_TeamMembers();
+            DataClass tbt = new DataClass();
             
 
             return View(tbt.Service());
@@ -50,10 +54,43 @@ namespace omdedaran.Controllers
 
 
         ////////////////////////{ start : blog }////////////////////////5
-        public ActionResult blog()
+        ///مثال 
+        ////url = MS/blog?NamePage=post&page=1
+        ////url = MS/blog?NamePage=Categories&Valuepage=اخبار پاندایی&page=1
+        public ActionResult blog(int page , string NamePage , string Valuepage )
         {
-            return View();
+             int recordsPerPage = 10;
+         
+            if (Valuepage != null)
+            {
+            ViewData["Valuepage"] = Valuepage;
+            }
+            else
+            {
+            ViewData["Valuepage"] = " ";
+            }
+
+            ViewData["NamePage"] = NamePage;
+
+
+            DataClass tbt = new DataClass();
+
+            var blog = tbt.BLOG(NamePage, Valuepage).ToPagedList(page, recordsPerPage);
+
+            var _blogclass = new blogclass()
+            {
+                BLOG = blog ,
+                BLOG_Categories = tbt.BLOG_Categories(),
+                BLOG_Tags = tbt.BLOG_Tags(" ", false),
+                TabS1 = tbt.TabS("new"),
+                TabS2 = tbt.TabS("like") 
+            };
+
+
+
+            return View(_blogclass);
         }
+        
         /// /////////////////////{ end : blog }////////////////////////
 
 

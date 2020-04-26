@@ -4,7 +4,7 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 
 <!-- Mirrored from eazzy.me/html/bella-shoes-rtl/index-9.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 25 Jan 2020 17:14:26 GMT -->
 
@@ -124,10 +124,10 @@
                         <a href="#" class="menu-toggle-close btn"><i class="fa fa-times"></i></a>
                         <ul class="nav sf-menu">
                             <li class="">
-                                <a href="index-9.html">صفحه اصلی</a>
+                                <a href="@Url.Action("index","MS")">صفحه اصلی</a>
                             </li>
                             <li>
-                                <a href="category.html">محصولات</a>
+                                <a href="#">محصولات</a>
                                 <ul>
                                     <li><a href="product-details.html">کفش</a></li>
                                     <li><a href="product-details.html">کتانی</a></li>
@@ -140,17 +140,17 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="file:///E:/1%20Work/%D9%BE%D8%B1%D9%88%DA%98%D9%87/Om_Da/web/ShoeShop/ShoeShop/eazzy.me/html/bella-shoes-rtl/blog.html">اطلاعیه ها</a>
+                                <a href="@Url.Action("blog","MS" ,new { NamePage = "post", page = 1 })">اطلاعیه ها</a>
                             </li>
                             <li>
-                                <a href="terms.html">قوانین و مقررات</a>
+                                <a href="@Url.Action("terms","MS")">قوانین و مقررات</a>
                                 <ul>
-                                    <li><a href="portfolio.html">ثبت شکایت</a></li>
+                                    <li><a href="#">ثبت شکایت</a></li>
                                 </ul>
                             </li>
-                            <li><a href="about.html">درباره ما</a></li>
-                            <li class="sale"><a href="contact.html">تماس با ما</a></li>
-                            <li><a href="login.html">حساب کاربری من</a></li>
+                            <li><a href="@Url.Action("about","MS")">درباره ما</a></li>
+                            <li class="sale"><a href="@Url.Action("contact","MS")">تماس با ما</a></li>
+                            <li><a href="@Url.Action("login","MS")">حساب کاربری من</a></li>
                         </ul>
                     </nav>
                     <!-- /Navigation -->

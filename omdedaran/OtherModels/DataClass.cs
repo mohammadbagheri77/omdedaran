@@ -68,7 +68,8 @@ namespace omdedaran.OtherModels
             {
                 query += $" And  [name] = N'{Valuepage}' order by [Date] desc ";
 
-            }else if (NamePage == "Search")
+            }
+            else if (NamePage == "Search")
             {
                 query += $"And [PandaMarketCMS].[dbo].[tbl_BLOG_Post].Title like N'%{Valuepage}%' OR [PandaMarketCMS].[dbo].[tbl_BLOG_Post].Text like N'%{Valuepage}%' order by([PandaMarketCMS].[dbo].[tbl_BLOG_Post].weight) DESC,[Date] DESC";
             }
@@ -76,10 +77,10 @@ namespace omdedaran.OtherModels
             {
                 query = BLOG_Tags(Valuepage, true)[0].name;
             }
-            
 
- /*
-         */
+
+            /*
+                    */
 
             using (DataTable dt = db.Select(query))
             {
@@ -97,6 +98,7 @@ namespace omdedaran.OtherModels
                     BLG.Cat_Id = dt.Rows[i]["Cat_Id"].ToString();
                     BLG.Comments = dt.Rows[i]["Comments"].ToString();
                     BLG.WrittenBy_AdminId = dt.Rows[i]["firstname"].ToString() + " " + dt.Rows[i]["lastname"].ToString();
+                    BLG.list_pic = Pic_BLOG(dt.Rows[i]["Id"].ToString());
                     List_BLG.Add(BLG);
 
                 }
@@ -182,30 +184,53 @@ namespace omdedaran.OtherModels
                 query += $" And  [PandaMarketCMS].[dbo].[tbl_BLOG_Tags].[name] = N'{Valuepage}' order by [Date] desc ";
 
 
-               
+
                 tbl_BLOG BLG = new tbl_BLOG
                 {
-                name = query
+                    name = query
                 };
                 List_BLG.Add(BLG);
             }
             else
             {
-                query = " SELECT [Name] ";
-                query += " FROM [PandaMarketCMS].[dbo].[tbl_BLOG_Tags] ";
-                query += " where [Is_Deleted]  like 0 AND  [Is_Disabled] like 0 order by id desc ";
-                using (DataTable dt = db.Select(query))
+                if (Valuepage== "مشاهده همه")
                 {
-
-                    for (int i = 0; i < dt.Rows.Count; i++)
+                    query = " SELECT [Name] ";
+                    query += " FROM [PandaMarketCMS].[dbo].[tbl_BLOG_Tags] ";
+                    query += " where [Is_Deleted]  like 0 AND  [Is_Disabled] like 0 order by id desc ";
+                    using (DataTable dt = db.Select(query))
                     {
-                        tbl_BLOG BLG = new tbl_BLOG();
 
-                        BLG.name = dt.Rows[i]["name"].ToString();
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            tbl_BLOG BLG = new tbl_BLOG();
 
-                        List_BLG.Add(BLG);
+                            BLG.name = dt.Rows[i]["name"].ToString();
+
+                            List_BLG.Add(BLG);
+                        }
                     }
                 }
+                else
+                {
+
+                    query = " SELECT top 10 [Name] ";
+                    query += " FROM [PandaMarketCMS].[dbo].[tbl_BLOG_Tags] ";
+                    query += " where [Is_Deleted]  like 0 AND  [Is_Disabled] like 0 order by id desc ";
+                    using (DataTable dt = db.Select(query))
+                    {
+
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            tbl_BLOG BLG = new tbl_BLOG();
+
+                            BLG.name = dt.Rows[i]["name"].ToString();
+
+                            List_BLG.Add(BLG);
+                        }
+                    }
+                }
+
             }
             return List_BLG;
         }
@@ -238,7 +263,7 @@ namespace omdedaran.OtherModels
                 query += "  GROUP BY [tbl_BLOG_Post].[Id] , [tbl_BLOG_Post].[Title], [tbl_BLOG_Post].[Date],[tbl_BLOG_Categories].[name] ";
                 query += "  HAVING COUNT([PostId]) > 5 order by count([PostId]) desc";
             }
-         
+
 
             using (DataTable dt = db.Select(query))
             {
@@ -248,17 +273,17 @@ namespace omdedaran.OtherModels
 
                     tbl_BLOG BLG = new tbl_BLOG();
 
-                     
+
                     BLG.Id = dt.Rows[i]["Id"].ToString();
                     BLG.Title = dt.Rows[i]["Title"].ToString();
                     BLG.Date = dt.Rows[i]["Date"].ToString();
                     BLG.Comments = dt.Rows[i]["Comments"].ToString();
 
-                    foreach(var item in Pic_BLOG(dt.Rows[i]["Id"].ToString()))
+                    foreach (var item in Pic_BLOG(dt.Rows[i]["Id"].ToString()))
                     {
-                    BLG.PicAddress =item.PicAddress;
+                        BLG.PicAddress = item.PicAddress;
                     }
-                   
+
                     List_BLG.Add(BLG);
 
                 }
@@ -266,6 +291,6 @@ namespace omdedaran.OtherModels
 
             return List_BLG;
         }
-      
+
     }
 }

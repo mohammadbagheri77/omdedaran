@@ -34,6 +34,7 @@ namespace omdedaran.Models
         public string PicAddress { get; set; }
         public string PicThumbnailAddress { get; set; }
         /////////////////////////////////////////////
+        public List<tbl_BLOG> list_pic { get; set; }
       
     }
 }

@@ -135,7 +135,7 @@
     </Compile>
     <Compile Include="Models\tbl_BLOG.cs" />
     <Compile Include="Models\tbl_BLOG_TeamMembers.cs" />
-    <Compile Include="OtherModels\blogclass.cs" />
+    <Compile Include="Other\blogclass.cs" />
     <Compile Include="OtherModels\DataClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

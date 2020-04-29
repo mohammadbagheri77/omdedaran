@@ -33,8 +33,14 @@ namespace omdedaran.Models
         public string PicSizeType { get; set; }
         public string PicAddress { get; set; }
         public string PicThumbnailAddress { get; set; }
+        /////////////////////////////////////////////tbl_BLOG_Comment
+        public string  message  { get; set; }
+        public string  Email  { get; set; }
+        public string ImagePath { get; internal set; }
         /////////////////////////////////////////////
         public List<tbl_BLOG> list_pic { get; set; }
+        public List<tbl_BLOG> list_cat { get; set; }
+        public List<tbl_BLOG> list_comment { get; set; }
       
     }
 }

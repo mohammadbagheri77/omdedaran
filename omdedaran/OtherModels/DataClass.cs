@@ -10,8 +10,9 @@ namespace omdedaran.OtherModels
 {
     public class DataClass
     {
+        ///////////////////////////////////////////////Controller    Models
 
-        ///////////////////////////////////////////////about    TeamMembers
+        ///////////////////////////////////////////////about        tbl_BLOG_TeamMembers
         public List<tbl_BLOG_TeamMembers> Service()
         {
             PDBC db = new PDBC("PandaMarketCMS", true);
@@ -39,7 +40,7 @@ namespace omdedaran.OtherModels
             }
             return TeamMembers;
         }
-        ///////////////////////////////////////////////BLOG     BLOGPost
+        ///////////////////////////////////////////////BLOG         tbl_BLOG
         public List<tbl_BLOG> BLOG(string NamePage, string Valuepage)
         {
             PDBC db = new PDBC("PandaMarketCMS", true);
@@ -78,9 +79,6 @@ namespace omdedaran.OtherModels
                 query = BLOG_Tags(Valuepage, true)[0].name;
             }
 
-
-            /*
-                    */
 
             using (DataTable dt = db.Select(query))
             {
@@ -134,27 +132,65 @@ namespace omdedaran.OtherModels
 
             return List_BLG;
         }
-        public List<tbl_BLOG> BLOG_Categories()
+        public List<tbl_BLOG> BLOG_Categories(string Valuepage, bool IsVal)
         {
             List<tbl_BLOG> List_BLG = new List<tbl_BLOG>();
             PDBC db = new PDBC("PandaMarketCMS", true);
             db.Connect();
+            string query;
 
-            string query = " SELECT  [name] ,( SELECT count(Id)";
-            query += " FROM [PandaMarketCMS].[dbo].[tbl_BLOG_Post]where [Cat_Id] =[PandaMarketCMS].[dbo].[tbl_BLOG_Categories].[Id])as 'count'";
-            query += " FROM  [PandaMarketCMS].[dbo].[tbl_BLOG_Categories]";
-            query += " where [Is_Deleted]  like 0 AND  [Is_Disabled] like 0 order by id desc ";
-
-            using (DataTable dt = db.Select(query))
+            if (IsVal)
             {
+                /**/
 
-                for (int i = 0; i < dt.Rows.Count; i++)
+                query = "  SELECT top 3 [PandaMarketCMS].[dbo].[tbl_BLOG_Post].[Id], [Title],[Text_min],[Date],[name] as'Cat_Id' ";
+                query += ",(SELECT count([Id])FROM[PandaMarketCMS].[dbo].[tbl_BLOG_Comment]where[PostId] =[PandaMarketCMS].[dbo].[tbl_BLOG_Post].[Id] )as'Comments'  ";
+                query += " FROM[PandaMarketCMS].[dbo].[tbl_BLOG_Post]  ";
+                query += " inner join[PandaMarketCMS].[dbo].[tbl_BLOG_Categories] on[PandaMarketCMS].[dbo].[tbl_BLOG_Post].[Cat_Id] = [PandaMarketCMS].[dbo].[tbl_BLOG_Categories].[Id]  ";
+                query += " where[PandaMarketCMS].[dbo].[tbl_BLOG_Post].[Is_Deleted]  like 0 AND[PandaMarketCMS].[dbo].[tbl_BLOG_Post].[Is_Disabled] like 0  ";
+                query += " And[PandaMarketCMS].[dbo].[tbl_BLOG_Categories].[Is_Deleted]  like 0 AND[PandaMarketCMS].[dbo].[tbl_BLOG_Categories].[Is_Disabled] like 0  ";
+                query += " And[name] = N'" + Valuepage + "'order by[Date] desc";
+
+                using (DataTable dt = db.Select(query))
                 {
-                    tbl_BLOG BLG = new tbl_BLOG();
 
-                    BLG.name = dt.Rows[i]["name"].ToString();
-                    BLG.count = dt.Rows[i]["count"].ToString();
-                    List_BLG.Add(BLG);
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        tbl_BLOG BLG = new tbl_BLOG();
+
+                        BLG.name = dt.Rows[i]["Cat_Id"].ToString();
+                        BLG.Id = dt.Rows[i]["Id"].ToString();
+                        BLG.Comments = dt.Rows[i]["Comments"].ToString();
+                        BLG.Title = dt.Rows[i]["Title"].ToString();
+                        BLG.Text_min = dt.Rows[i]["Text_min"].ToString();
+                        BLG.Date = dt.Rows[i]["Date"].ToString();
+                        foreach (var item in Pic_BLOG(dt.Rows[i]["Id"].ToString()))
+                        {
+                            BLG.PicAddress = item.PicAddress;
+                        }
+                        List_BLG.Add(BLG);
+                    }
+                }
+
+            }
+            else
+            {
+                query = " SELECT  [name] ,( SELECT count(Id)";
+                query += " FROM [PandaMarketCMS].[dbo].[tbl_BLOG_Post]where [Cat_Id] =[PandaMarketCMS].[dbo].[tbl_BLOG_Categories].[Id])as 'count'";
+                query += " FROM  [PandaMarketCMS].[dbo].[tbl_BLOG_Categories]";
+                query += " where [Is_Deleted]  like 0 AND  [Is_Disabled] like 0 order by id desc ";
+
+                using (DataTable dt = db.Select(query))
+                {
+
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        tbl_BLOG BLG = new tbl_BLOG();
+
+                        BLG.name = dt.Rows[i]["name"].ToString();
+                        BLG.count = dt.Rows[i]["count"].ToString();
+                        List_BLG.Add(BLG);
+                    }
                 }
             }
 
@@ -193,7 +229,7 @@ namespace omdedaran.OtherModels
             }
             else
             {
-                if (Valuepage== "مشاهده همه")
+                if (Valuepage == "مشاهده همه")
                 {
                     query = " SELECT [Name] ";
                     query += " FROM [PandaMarketCMS].[dbo].[tbl_BLOG_Tags] ";
@@ -288,6 +324,78 @@ namespace omdedaran.OtherModels
 
                 }
             }
+
+            return List_BLG;
+        }
+        //////////////////////////////////////////////BlogPost      tbl_BLOG
+        public tbl_BLOG BLOGPOST(string id)
+        {
+            PDBC db = new PDBC("PandaMarketCMS", true);
+            db.Connect();
+
+            string query = "";
+            query += " SELECT [PandaMarketCMS].[dbo].[tbl_BLOG_Post].[Id], [Title],[Text_min],[Text],[Date]  ,[name] as'Cat_Id' ";
+            query += " ,(SELECT [ad_firstname]FROM [PandaMarketCMS].[dbo].[tbl_ADMIN_main] where[id_Admin]=[PandaMarketCMS].[dbo].[tbl_BLOG_Post].[WrittenBy_AdminId]) as'firstname'";
+            query += " ,(SELECT [ad_lastname]FROM [PandaMarketCMS].[dbo].[tbl_ADMIN_main] where[id_Admin]=[PandaMarketCMS].[dbo].[tbl_BLOG_Post].[WrittenBy_AdminId]) as'lastname'";
+            query += " ,(SELECT count([Id])FROM [PandaMarketCMS].[dbo].[tbl_BLOG_Comment]where [PostId] =[PandaMarketCMS].[dbo].[tbl_BLOG_Post].[Id] )as'Comments'";
+            query += " FROM [PandaMarketCMS].[dbo].[tbl_BLOG_Post]";
+            query += " inner join [PandaMarketCMS].[dbo].[tbl_BLOG_Categories] on [PandaMarketCMS].[dbo].[tbl_BLOG_Post].[Cat_Id] = [PandaMarketCMS].[dbo].[tbl_BLOG_Categories].[Id] ";
+            query += " where [PandaMarketCMS].[dbo].[tbl_BLOG_Post].[Is_Deleted]  like 0 AND  [PandaMarketCMS].[dbo].[tbl_BLOG_Post].[Is_Disabled] like 0";
+            query += " And [PandaMarketCMS].[dbo].[tbl_BLOG_Categories].[Is_Deleted]  like 0 AND  [PandaMarketCMS].[dbo].[tbl_BLOG_Categories].[Is_Disabled] like 0";
+            query += " And[PandaMarketCMS].[dbo].[tbl_BLOG_Post].[Id]=" + id;
+
+            /*
+                 
+              
+             */
+            DataTable dt = db.Select(query);
+
+            var tbg = new tbl_BLOG
+            {
+                Id = dt.Rows[0]["Id"].ToString(),
+                Title = dt.Rows[0]["Title"].ToString(),
+                Text_min = dt.Rows[0]["Text_min"].ToString(),
+                Text = dt.Rows[0]["Text"].ToString(),
+                Date = dt.Rows[0]["Date"].ToString(),
+                Cat_Id = dt.Rows[0]["Cat_Id"].ToString(),
+                Comments = dt.Rows[0]["Comments"].ToString(),
+                WrittenBy_AdminId = dt.Rows[0]["firstname"].ToString() + " " + dt.Rows[0]["lastname"].ToString(),
+                list_pic = Pic_BLOG(dt.Rows[0]["Id"].ToString()),
+                list_cat = BLOG_Categories(dt.Rows[0]["Cat_Id"].ToString(), true),
+                list_comment=list_comm(dt.Rows[0]["Id"].ToString())
+            };
+
+            return tbg;
+        }
+        private List<tbl_BLOG> list_comm(string id)
+        {
+            PDBC db = new PDBC("PandaMarketCMS", true);
+            db.Connect();
+
+            List<tbl_BLOG> List_BLG = new List<tbl_BLOG>();
+            string query = "SELECT [Id],[message],[Name],[PostId],[ImagePath],[Date]";
+            query += "FROM[PandaMarketCMS].[dbo].[tbl_BLOG_Comment] where[PostId] = "+id+ "order by Id desc";
+
+
+            DataTable dt = db.Select(query);
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+
+                tbl_BLOG BLG = new tbl_BLOG();
+
+
+                BLG.Id = dt.Rows[i]["Id"].ToString();
+                BLG.message = dt.Rows[i]["message"].ToString();
+                BLG.name = dt.Rows[i]["Name"].ToString();
+                BLG.Date = dt.Rows[i]["Date"].ToString();
+                BLG.ImagePath = dt.Rows[i]["ImagePath"].ToString();
+
+               
+                List_BLG.Add(BLG);
+
+            }
+
 
             return List_BLG;
         }

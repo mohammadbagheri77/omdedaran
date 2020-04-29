@@ -146,6 +146,7 @@
     <Content Include="assets\css\theme.css" />
     <Content Include="assets\ico\apple-touch-icon-144-precomposed.png" />
     <Content Include="assets\ico\favicon.ico" />
+    <Content Include="assets\img\black.png" />
     <Content Include="assets\img\flag.gif" />
     <Content Include="assets\img\icon-1.png" />
     <Content Include="assets\img\icon-2.png" />
@@ -413,6 +414,7 @@
     <Content Include="Views\MS\about.cshtml" />
     <Content Include="Views\MS\terms.cshtml" />
     <Content Include="Views\MS\blog.cshtml" />
+    <Content Include="Views\MS\blog_post.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

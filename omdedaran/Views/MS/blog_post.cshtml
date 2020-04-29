@@ -1,0 +1,295 @@
+﻿@model omdedaran.Other.blogclass
+@{
+    ViewBag.Title = "blog_post";
+    Layout = "~/Views/Master/Master.cshtml";
+}
+
+<!-- CONTENT AREA -->
+<div class="content-area">
+
+
+    <!-- PAGE WITH SIDEBAR -->
+    <section class="page-section with-sidebar">
+        <div class="container">
+            <div class="row">
+                <!-- SIDEBAR -->
+                <aside class="col-md-3 sidebar" id="sidebar">
+                    <!-- widget search -->
+                    <div class="widget">
+                        <div class="widget-search">
+                            <form action="/MS/blog?NamePage=Search&page=1" method="post">
+                                <input class="form-control" type="text" id="Valuepage" name="Valuepage" placeholder="Search" required>
+                                <button><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /widget search -->
+                    <!-- widget tabs -->
+                    <div class="widget widget-tabs alt">
+                        <div class="widget-content">
+                            <ul id="tabs" class="nav nav-justified">
+                                <li><a href="#tab-s1" data-toggle="tab">جدید ترین ها</a></li>
+                                <li class="active"><a href="#tab-s2" data-toggle="tab">محبوب ترین ها</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <!-- tab 1 -->
+                                <div class="tab-pane fade" id="tab-s1">
+                                    <div class="recent-post">
+                                        @foreach (var player in Model.TabS1)
+                                        {
+
+                                            <div class="media">
+                                                <a class="pull-right media-link" href="@Url.Action("blog_post", "MS", new {IdPage=@player.Id})">
+                                                    <img class="media-object" style="width: 100%;" src="@player.PicAddress" alt="@player.Title">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                                <div class="media-body">
+                                                    <div class="media-meta">
+                                                        @player.Date
+                                                        <span class="divider">/</span><a href="#"><i class="fa fa-comment"></i>@player.Comments</a>
+                                                    </div>
+                                                    <h4 class="media-heading"><a href="@Url.Action("blog_post", "MS", new {IdPage=@player.Id})">@player.Title</a></h4>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <!-- tab 2 -->
+                                <div class="tab-pane fade in active" id="tab-s2">
+                                    <div class="recent-post">
+                                        @foreach (var player in Model.TabS2)
+                                        {
+                                            <div class="media">
+                                                <a class="pull-right media-link" href="@Url.Action("blog_post", "MS", new {IdPage=@player.Id})">
+                                                    <img class="media-object" style="width: 100%;" src="@player.PicAddress" alt="@player.Title">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                                <div class="media-body">
+                                                    <div class="media-meta">
+                                                        @player.Date
+                                                        <span class="divider">/</span><a href="#"><i class="fa fa-comment"></i>@player.Comments</a>
+                                                    </div>
+                                                    <h4 class="media-heading"><a href="@Url.Action("blog_post", "MS", new {IdPage=@player.Id})">@player.Title</a></h4>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <a class="btn btn-theme btn-theme-transparent btn-theme-sm btn-block" href="#">محصولات بیشتر</a>
+                        </div>
+                    </div>
+                    <!-- /widget tabs -->
+                    <!-- widget archives -->
+                    <div class="widget shop-categories">
+                        <h4 class="widget-title">دسته بندی</h4>
+                        <div class="widget-content">
+                            <ul>
+                                <li>
+                                    @foreach (var player in Model.BLOG_Categories)
+                                    {
+                                        <a href="@Url.Action("blog", "MS", new { NamePage = "Categories", Valuepage = @player.name, page = 1 })">@player.name<span class="count"> @player.count   </span></a>
+                                        <hr />
+                                    }
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /widget archive -->
+                    <!-- widget tag cloud -->
+                    <div class="widget widget-tag-cloud">
+                        <a class="btn btn-theme btn-title-more" href="@Url.Action("blog", "MS", new { NamePage = "tag", Valuepage = "مشاهده همه", page = 1 })">مشاهده همه</a>
+                        <h4 class="widget-title"><span>برچسب ها</span></h4>
+                        <ul>
+                            @foreach (var player in Model.BLOG_Tags)
+                            {
+                                <li><a href="@Url.Action("blog", "MS", new { NamePage = "tag", Valuepage = @player.name, page = 1 })">@player.name</a></li>
+                            }
+
+                        </ul>
+                    </div>
+                    <!-- /widget tag cloud -->
+
+                </aside>
+                <!-- /SIDEBAR -->
+                <!-- CONTENT -->
+                <div class="col-md-9 content" id="content">
+
+                    <!-- Blog post -->
+                    <article class="post-wrap">
+
+                        <div class="post-media">
+
+                            @if (Model.BLOGPOST.list_pic.Count == 1)
+                            {
+                                foreach (var player in Model.BLOGPOST.list_pic)
+                                {
+                                    <div class="item">
+                                        <a href="@player.PicAddress" data-gal="prettyPhoto"><img class="img-responsive" src="@player.PicAddress" alt="@Model.BLOGPOST.Title" /></a>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="owl-carousel img-carousel">
+                                    @foreach (var player in Model.BLOGPOST.list_pic)
+                                    {
+                                        <div class="item">
+                                            <a href="@player.PicAddress" data-gal="prettyPhoto"><img class="img-responsive" src="@player.PicAddress" alt="@Model.BLOGPOST.Title" /></a>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+
+
+                        </div>
+                        <div class="post-header">
+                            <h2 class="post-title"><a href="#"> @Model.BLOGPOST.Title</a></h2>
+                            <div class="post-meta">نویسنده: <a href="#">  @Model.BLOGPOST.WrittenBy_AdminId</a> / @Model.BLOGPOST.Date  / دسته بندی : <a href="@Url.Action("blog","MS" ,new {NamePage = "Categories", Valuepage=  Model.BLOGPOST.Cat_Id , page = 1 })">@Model.BLOGPOST.Cat_Id</a> /نظرات <a>@Model.BLOGPOST.Comments </a></div>
+                        </div>
+
+
+                        <div class="post-body">
+                            <div class="post-excerpt">
+                                <p class="text-xl"> @Model.BLOGPOST.Text_min,...</p>
+                                <p>@Html.Raw(Model.BLOGPOST.Text)</p>
+                            </div>
+                        </div>
+
+
+
+
+                    </article>
+                    <!-- /Blog post -->
+                    <!-- PAGE -->
+                    <section class="page-section">
+                        <a class="btn btn-theme btn-title-more btn-icon-left" href="@Url.Action("blog","MS" ,new {NamePage = "Categories", Valuepage=  Model.BLOGPOST.Cat_Id , page = 1 })"><i class="fa fa-file-text-o"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">مشاهده همه پستها</font></font></a>
+                        <h2 class="block-title"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">پست های مرتبط</font></font></span></h2>
+                        <div class="row">
+                            @foreach (var player in Model.BLOGPOST.list_cat)
+                            {
+
+                                <div class="col-md-4">
+                                    <div class="recent-post alt">
+                                        <div class="media">
+                                            <a class="media-link" href="">
+                                                <img class="media-object" src="@player.PicAddress" alt="@player.Title">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                            <div class="media-body">
+                                                <p class="media-category">
+                                                    <a href="@Url.Action("blog", "MS", new { NamePage = "Categories", Valuepage = @player.name, page = 1 })"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@player.name</font></font></a>
+                                                    <h4 class="media-heading"><a href="@Url.Action("blog_post", "MS", new {IdPage=@player.Id})"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@player.Title</font></font></a></h4><font style="vertical-align: inherit;">
+                                                        <font style="vertical-align: inherit;">
+                                                            @player.Text_min
+                                                        </font>
+                                                    </font><div class="media-meta">
+                                                        <font style="vertical-align: inherit;">
+                                                            <font style="vertical-align: inherit;">
+                                                                @player.Date
+                                                            </font>
+                                                        </font><span class="divider"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">/</font></font></span><a href="#"><i class="fa fa-comment"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@player.Comments </font></font></a>
+
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </section>
+                    <!-- /PAGE -->
+                    <!-- PAGE -->
+                    <section class="page-section no-padding-bottom">
+
+                        <h4 class="block-title">
+                            <span>
+                                <font style="vertical-align: inherit;">
+                                    <font style="vertical-align: inherit;">نظرات </font>
+                                </font>
+                                <span class="thin">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">
+                                            (@Model.BLOGPOST.Comments نظر)
+                                        </font>
+                                    </font>
+                                </span>
+                            </span>
+                        </h4>
+                        <!-- Leave a Comment -->
+                        <div class="comments-form">
+                            <h4 class="block-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">نظر خود را ارسال کنید</font></font></h4>
+                            @using (Html.BeginForm("comment_post", "MS", FormMethod.Post))
+                            {@Html.AntiForgeryToken()
+                            <input type="text" name="Id" id="Id" value="@Model.BLOGPOST.Id" style="display:none">
+                           
+                            <div class="form-group">
+                                <input type="text" placeholder="نام و نام خانوادگی شما" class="form-control" title="نظرات-فرم-نام" name="name" id="name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="email" placeholder="آدرس ایمیل شما" class="form-control" title="نظرات-فرم-ایمیل" name="Email" id="Email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea placeholder="پیغام شما" class="form-control" title="نظرات-فرم-نظرات" name="message" id="message" rows="6" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-theme btn-theme-transparent btn-icon-left" id="submit">
+                                    <i class="fa fa-comment"></i><font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;"> ارسال نظر</font>
+                                    </font>
+                                </button>
+                            </div>
+
+                        }
+                        </div>
+                        <!-- /Leave a Comment -->
+                        <!-- Comments -->
+                        <div class="comments">
+                            @foreach (var player in Model.BLOGPOST.list_comment)
+                            {
+                                <div class="media comment">
+                                    <a href="#" class="pull-right comment-avatar">
+
+                                        @if (player.ImagePath != "")
+                                        {
+                                            <img alt="" src="@player.ImagePath" class="media-object">
+                                        }
+                                        else
+                                        {
+                                            <img alt="" style="width: 100%;" src="~/assets/img/black.png" class="media-object">
+                                        }
+
+                                    </a>
+                                    <div class="media-body">
+                                        <p class="comment-meta"><span class="comment-author"><a href="#">@player.name</a><!-- <span class="comment-date">player.Date روز پیش  <i class="fa fa-flag"></i></span>--></span></p>
+                                        <p class="comment-text">@player.message</p>
+
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+
+                        <!-- /Comments -->
+                    </section>
+                    <!-- /PAGE -->
+
+                </div>
+                <!-- /CONTENT -->
+
+
+            </div>
+        </div>
+    </section>
+    <!-- /PAGE WITH SIDEBAR -->
+
+
+</div>
+<!-- /CONTENT AREA -->

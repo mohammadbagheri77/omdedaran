@@ -1,0 +1,82 @@
+﻿@model omdedaran.Models.tbl_Customer_Main
+@{
+    ViewBag.Title = "حساب کاربری من - ورود";
+    Layout = "~/Views/Master/Master.cshtml";
+}
+
+    <div class="content-area">
+
+        <!-- PAGE -->
+        <section class="page-section color">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="block-title"><span>ورود به حساب کاربری</span></h3>
+                        @using (Html.BeginForm("login", "MS", FormMethod.Post))
+                        {@Html.AntiForgeryToken()
+                        
+                    <div class="row">
+                        <div class="col-md-12 hello-text-wrap">
+                            <span class="hello-text text-thin">سلام ، به حساب کاربری خود خوش آمديد.</span>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-12">
+
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.C_Mobile, new { @class = "form-control", required = "required", type = "text", placeholder = "شماره موبایل" })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.C_Password, new { @class = "form-control", required = "required", type = "password", placeholder = "رمز عبور" })
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            
+                                <label>
+                                    @Html.CheckBoxFor(m => m.remember_me)
+                                    مرا به خاطر بسپار
+                                </label>
+                            
+                        </div>
+                        <div class="col-md-12 col-lg-6 text-right-lg">
+                            <a class="forgot-password" href="#">رمز عبورتان را فراموش کرده‌اید؟</a>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-theme btn-block btn-theme-dark">ورود</button>
+                           
+                        </div>
+                     
+                    </div>
+                        
+                          }
+                    </div>
+                    <div class="col-sm-6">
+                        <h3 class="block-title"><span>ایجاد حساب کاربری</span></h3>
+                        <form action="#" class="create-account">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <h3 class="block-title">امروز ثبت نام کنید و از مزایای عضویت بهره مند شوید.</h3>
+                                    <ul class="list-check">
+                                        <li>سفارش آنلاین</li>
+                                        <li>مشاهده ی پیشنهادات ویژه </li>
+                                        <li>لیست مورد پسند</li>
+                                        <li>دریافت اخبار منحصر به فرد و خرید سفارشی</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <a class="btn btn-block btn-theme btn-theme-dark btn-create" href="#">حساب کاربری جدید</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /PAGE -->
+
+
+
+    </div>
+
